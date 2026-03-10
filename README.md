@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TrackVision — Digital Pulse Agency
 
-## Getting Started
+TrackVision est le cockpit de pilotage commercial et financier de l&apos;agence **Digital Pulse Agency (DPA)**, construit sur Next.js, Supabase et Tailwind CSS.
 
-First, run the development server:
+## Déploiement en 10 étapes
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. **Créer un compte Supabase**  
+   Rendez-vous sur `https://supabase.com` et créez un compte (gratuit).
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. **Créer un nouveau projet Supabase**  
+   Crée un projet, puis note **l&apos;URL du projet** et les **clés API** (anon, service role) dans l&apos;onglet `Settings > API`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. **Initialiser la base de données**  
+   Dans Supabase, ouvre `SQL Editor`, colle le contenu de `supabase/schema.sql` puis clique sur **Run** pour créer les tables, RLS et triggers.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. **Activer la MFA**  
+   Dans `Authentication > Settings`, active l&apos;authentification multi-facteurs (MFA) pour sécuriser l&apos;accès à l&apos;espace admin.
 
-## Learn More
+5. **Ajouter le logo DPA**  
+   Copie `dpa-logo.png` dans `public/images/` sous le nom `dpa-logo.png`.
 
-To learn more about Next.js, take a look at the following resources:
+6. **Configurer les variables d&apos;environnement**  
+   Remplis le fichier `.env.local` à la racine du projet avec :
+   - `NEXT_PUBLIC_SUPABASE_URL`
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+   - `SUPABASE_SERVICE_ROLE_KEY`
+   - `ANTHROPIC_API_KEY`
+   - `NEXTAUTH_SECRET`
+   - `NEXT_PUBLIC_APP_NAME`
+   - `NEXT_PUBLIC_AGENCY_NAME`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+7. **Installer les dépendances et lancer le projet**  
+   Dans le dossier du projet (`trackvision`), exécute :
+   ```bash
+   npm install
+   npm run dev
+   ```
+   Puis ouvre `http://localhost:3000` dans ton navigateur pour tester l&apos;app.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+8. **Créer un dépôt GitHub**  
+   Initialise un dépôt Git dans le dossier du projet, ajoute les fichiers et pousse vers un nouveau dépôt sur GitHub.
 
-## Deploy on Vercel
+9. **Déployer sur Vercel**  
+   Va sur `https://vercel.com`, crée un nouveau projet, connecte ton dépôt GitHub `TrackVision` et lance le déploiement.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+10. **Configurer les variables sur Vercel**  
+    Dans `Vercel > Project Settings > Environment Variables`, reproduis toutes les variables de `.env.local`. Redeploie ensuite le projet si nécessaire.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Sécurité
+
+⚠️ Ne jamais partager `.env.local` ni les clés API (Supabase, Claude / Anthropic).  
+Garde ces informations uniquement dans ton environnement local ou dans les variables d&apos;environnement chiffrées de Vercel.
+
