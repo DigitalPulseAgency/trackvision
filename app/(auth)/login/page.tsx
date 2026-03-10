@@ -19,17 +19,26 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
 
-    // Simulation d'une connexion réussie pour accéder au Dashboard
-    setTimeout(() => {
+    // Tentative de connexion réelle avec ton email et mot de passe
+    const { error: signInError } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (signInError) {
+      setError("Accès refusé : Identifiants incorrects.");
       setLoading(false);
-      router.push('/dashboard');
-    }, 800);
+      return;
+    }
+
+    // Si c'est bon, on entre dans le Dashboard
+    router.push('/dashboard');
+    setLoading(false);
   };
 
   return (
