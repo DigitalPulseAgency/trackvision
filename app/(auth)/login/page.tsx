@@ -24,19 +24,24 @@ export default function LoginPage() {
     setLoading(true);
     setError(null);
 
-    // Tentative de connexion réelle avec ton email et mot de passe
+    // Sécurité maximale : on ne laisse même pas tenter la connexion si l'email est différent du tien
+    if (email !== 'socialpulseagency135@gmail.com') {
+      setError("Accès strictement réservé à l'administrateur.");
+      setLoading(false);
+      return;
+    }
+
     const { error: signInError } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
 
     if (signInError) {
-      setError("Accès refusé : Identifiants incorrects.");
+      setError("Identifiants incorrects.");
       setLoading(false);
       return;
     }
 
-    // Si c'est bon, on entre dans le Dashboard
     router.push('/dashboard');
     setLoading(false);
   };
