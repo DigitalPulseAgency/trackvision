@@ -1,5 +1,3 @@
-import validator from 'validator';
-
 const SQL_PATTERNS = [/--/g, /;/g, /\b(drop|insert|delete|update)\b/gi];
 
 export const sanitizeInput = (input: string): string => {
